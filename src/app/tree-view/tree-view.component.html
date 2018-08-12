@@ -1,0 +1,32 @@
+<ul>
+  <li *ngFor="let doc of documents">
+      <span (click)="toggleState(info.rel, info.terms)" class="arrow">
+        <i [class]="isChildViewExists(doc.name, doc.termsrelation)"></i>
+      </span>
+      <span (click)="toggleState(doc.name, doc.termsrelation)">{{ doc.name }}</span>
+      <div *ngIf="doc.termsrelation && collapsedList.indexOf(doc.name) === -1">
+          <ul>
+              <li *ngFor="let info of doc.termsrelation">
+                  <span (click)="toggleState(info.rel, info.terms)" class="arrow"><i  [class]="isChildViewExists(info.rel, info.terms)" ></i></span>
+                  <span (click)="toggleState(info.rel, info.terms)">{{info.rel}}</span>
+                  <tree-view *ngIf="info.terms && collapsedList.indexOf(info.rel) === -1" [documents]="info.terms"></tree-view>
+              </li>
+          </ul>
+      </div>
+  </li>
+</ul>
+
+
+
+<!-- <ul>
+    <li *ngFor="let dir of directories">
+        <span><input type="checkbox" [checked]="dir.checked" (click)="dir.check()"    /></span> 
+        <span (click)="dir.toggle()">{{ dir.name }}</span>
+        <div *ngIf="dir.expanded">
+            <ul >
+                <li *ngFor="let file of dir.files">{{file}}</li>
+            </ul>
+            <tree-view [directories]="dir.directories"></tree-view>
+        </div>
+    </li>
+</ul> -->
